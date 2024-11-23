@@ -231,7 +231,8 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                         // Başarılı kayıt sonrası yapılacaklar
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       } else {
                         // Hata durumu
@@ -252,7 +253,8 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       child: const Text(

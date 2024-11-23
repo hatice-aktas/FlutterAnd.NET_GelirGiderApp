@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gelir_gider_app/gizlilik_sozlesmesi.dart';
 import 'package:gelir_gider_app/kullanim_kosullari.dart';
 import 'package:gelir_gider_app/login_page.dart';
@@ -126,7 +125,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
           // Başarılı kayıt sonrası yapılacaklar
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
           print('Kayıt başarılı');
           setState(() {
@@ -291,7 +290,8 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TermsConditionsPage()),
+                              builder: (context) =>
+                                  const TermsConditionsPage()),
                         );
                       },
                       child: Text(
@@ -318,7 +318,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PrivacyPolicyPage()),
+                              builder: (context) => const PrivacyPolicyPage()),
                         );
                       },
                       child: Text(
@@ -345,7 +345,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                 onPressed: _register,
                 style:
                     ElevatedButton.styleFrom(minimumSize: const Size(750, 50)),
-                child: Text('Kaydet'),
+                child: const Text('Kaydet'),
               ),
               const SizedBox(height: 20),
               Row(
@@ -358,7 +358,8 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       child: Text(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelir_gider_app/email_register_page.dart';
+import 'package:gelir_gider_app/home_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,13 +16,61 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   bool _isPasswordVisible = false; // Şifre görünürlüğünü kontrol eden değişken
+
+  Future<void> _googleLogin() async {
+    try {
+      // Kullanıcıyı Google ile giriş yapmaya zorla
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        // Kullanıcı giriş yapmadan çıktı
+        return;
+      }
+
+      // Google'dan kullanıcı bilgilerini al
+      final String email = googleUser.email;
+      final String fullName = googleUser.displayName ?? "Kullanıcı";
+
+      // API'ye kayıt gönder
+      final response = await http.post(
+        Uri.parse("http://10.0.2.2:5139/api/User/register"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "username": fullName,
+          "email": email,
+          "password": "", // Şifre olmayacak, Google ile kayıt
+          "phone": "" // Telefon numarası yok
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Kayıt başarılıysa anasayfaya yönlendir
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else {
+        // Hata mesajı göster
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Kayıt başarısız: ${response.body}")),
+        );
+      }
+    } catch (error) {
+      // Hata mesajı göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Hata: $error")),
+      );
+    }
+  }
 
   void login() async {
     String username = usernameController.text;
     String password = passwordController.text;
 
-    var url = Uri.parse('https://localhost:7185/api/Login'); // API adresi
+    var url = Uri.parse('http://10.0.2.2:5139/api/Login'); // API adresi
 
     var response = await http.post(
       url,
@@ -35,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['success']) {
         // Giriş başarılı, ana sayfaya yönlendir
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
       } else {
         // Hata mesajı göster
 
@@ -114,6 +167,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextButton(
                       onPressed: () {
                         // Şifremi Unuttum tıklaması, yeni bir sayfaya yönlendirilecek
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EmailRegisterPage()),
+                        );
                       },
                       child: const Text('Şifremi Unuttum?'),
                     ),
@@ -128,8 +186,8 @@ class _LoginPageState extends State<LoginPage> {
                     backgroundColor: Colors.lightBlueAccent, // Soft mavi renk
                     minimumSize: const Size(750, 50), // Buton genişliği
                   ),
-                  child:
-                      Text('Giriş Yap', style: TextStyle(color: Colors.white)),
+                  child: const Text('Giriş Yap',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 20),
 
@@ -151,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EmailRegisterPage()),
+                          builder: (context) => const EmailRegisterPage()),
                     );
                   },
                   icon: const Icon(Icons.mail_outline),
@@ -166,10 +224,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
 
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // Gmail ile devam etme fonksiyonu
-                  },
-                  icon: const Icon(Icons.mail_outline),
+                  onPressed: _googleLogin,
+                  icon: Image.asset(
+                    'assets/gmail_icon.png',
+                    height: 24,
+                    width: 24,
+                  ),
                   label: Text('Gmail ile Devam Et',
                       style: TextStyle(color: Colors.grey.shade700)),
                   style: ElevatedButton.styleFrom(
@@ -183,6 +243,10 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () {
                     // Kaydolmadan Devam Et
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
                   },
                   child: const Text('Kaydolmadan Devam Et'),
                 ),

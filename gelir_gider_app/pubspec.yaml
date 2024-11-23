@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   http: ^1.2.2
+  google_sign_in: ^5.4.3
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ flutter:
 
   assets:
     - assets/login_image.png
+    - assets/gmail_icon.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
