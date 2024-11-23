@@ -8,6 +8,8 @@ import 'package:gelir_gider_app/login_page.dart';
 import 'package:http/http.dart' as http;
 
 class EmailRegisterPage extends StatefulWidget {
+  const EmailRegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -59,24 +61,20 @@ class _RegisterPageState extends State<EmailRegisterPage> {
     }
 
     if (number.length > 1) {
-      number = number.substring(0, 1) +
-          ' ' +
-          number.substring(1); // İlk "0" ve boşluk
+      number =
+          '${number.substring(0, 1)} ${number.substring(1)}'; // İlk "0" ve boşluk
     }
     if (number.length > 5) {
-      number = number.substring(0, 5) +
-          ' ' +
-          number.substring(5); // İlk 3 rakamdan sonra boşluk
+      number =
+          '${number.substring(0, 5)} ${number.substring(5)}'; // İlk 3 rakamdan sonra boşluk
     }
     if (number.length > 9) {
-      number = number.substring(0, 9) +
-          ' ' +
-          number.substring(9); // Sonraki 3 rakamdan sonra boşluk
+      number =
+          '${number.substring(0, 9)} ${number.substring(9)}'; // Sonraki 3 rakamdan sonra boşluk
     }
     if (number.length > 12) {
-      number = number.substring(0, 12) +
-          ' ' +
-          number.substring(12); // Son 2 rakamdan sonra boşluk
+      number =
+          '${number.substring(0, 12)} ${number.substring(12)}'; // Son 2 rakamdan sonra boşluk
     }
     if (number.length > 15) {
       number = number.substring(0, 15); // Maksimum 11 rakam, fazla girilmesin
@@ -153,7 +151,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kayıt Ol'),
+        title: const Text('Kayıt Ol'),
       ),
       body: Form(
         key: _formKey,
@@ -171,7 +169,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                 width: 750,
                 child: TextFormField(
                   controller: _usernameController,
-                  decoration: InputDecoration(labelText: 'Kullanıcı Adı'),
+                  decoration: const InputDecoration(labelText: 'Kullanıcı Adı'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Kullanıcı adı zorunlu';
@@ -185,7 +183,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                 width: 750,
                 child: TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(labelText: 'Email'),
                   validator: _validateEmail,
                 ),
               ),
@@ -196,7 +194,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   validator: (value) {
-                    if (value != null && !value.isEmpty) {
+                    if (value != null && value.isNotEmpty) {
                       if (value.length != 15) {
                         return 'Telefon numarası 11 haneli olmalıdır';
                       }
@@ -281,11 +279,11 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Kayıt olarak, '),
+                  const Text('Kayıt olarak, '),
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: InkWell(
@@ -312,7 +310,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                       },
                     ),
                   ),
-                  Text(' ve '),
+                  const Text(' ve '),
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: InkWell(
@@ -339,20 +337,21 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                       },
                     ),
                   ),
-                  Text('nı kabul etmiş olursunuz.'),
+                  const Text('nı kabul etmiş olursunuz.'),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _register,
+                style:
+                    ElevatedButton.styleFrom(minimumSize: const Size(750, 50)),
                 child: Text('Kaydet'),
-                style: ElevatedButton.styleFrom(minimumSize: Size(750, 50)),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Zaten kayıtlı mısınız? '),
+                  const Text('Zaten kayıtlı mısınız? '),
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: InkWell(
@@ -380,7 +379,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(_statusMessage),
             ],
           ),

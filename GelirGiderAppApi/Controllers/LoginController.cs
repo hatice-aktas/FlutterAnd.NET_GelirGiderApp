@@ -29,23 +29,39 @@ namespace GelirGiderAppApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
-
-            if (user == null)
+            try
             {
-                return Unauthorized(new { success = false, message = "Kullanıcı adı veya şifre hatalı" });
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+
+                if (user == null)
+                {
+                    return Unauthorized(new { success = false, message = "Kullanıcı adı veya şifre hatalı" });
+                }
+
+                // Şifre doğrulaması
+                var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+
+                if (passwordVerificationResult == PasswordVerificationResult.Failed)
+                {
+                    return Unauthorized(new { success = false, message = "Kullanıcı adı veya şifre hatalı" });
+                }
+
+                // Başarılı giriş
+                return Ok(new { success = true, message = "Giriş başarılı." });
             }
-
-            // Şifre doğrulaması
-            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(null, user.PasswordHash, model.Password);
-
-            if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            catch (InvalidOperationException ex1)
             {
-                return Unauthorized(new { success = false, message = "Kullanıcı adı veya şifre hatalı" });
+                return Ok(new { success = false, message = "Giriş başarısız." });
             }
-
-            // Başarılı giriş
-            return Ok(new { success = true, message = "Giriş başarılı." });
+            catch (InvalidDataException ex2)
+            {
+                return Ok(new { success = false, message = "Giriş başarısız." });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { success = false, message = "Giriş başarısız." });
+            }
+            
         }
 
     }

@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -40,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         print("başarısız: ${response.statusCode}");
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
             title: Text('Hata'),
             content: Text('Kullanıcı adı veya şifre hatalı'),
           ),
@@ -65,20 +67,20 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset('assets/login_image.png',
                     height: 150), // Üstteki görsel
-                SizedBox(height: 30),
-                Container(
+                const SizedBox(height: 30),
+                SizedBox(
                   width: 750, // Genişliği 75 olarak ayarladık
                   child: TextField(
                     controller: usernameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Kullanıcı Adı',
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
 
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 750, // Genişliği 75 olarak ayarladık
                   child: TextField(
                     controller: passwordController,
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         !_isPasswordVisible, // Şifreyi gizleme/gösterme
                     decoration: InputDecoration(
                       labelText: 'Şifre',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
@@ -113,36 +115,36 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // Şifremi Unuttum tıklaması, yeni bir sayfaya yönlendirilecek
                       },
-                      child: Text('Şifremi Unuttum?'),
+                      child: const Text('Şifremi Unuttum?'),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     login();
                   },
-                  child:
-                      Text('Giriş Yap', style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlueAccent, // Soft mavi renk
-                    minimumSize: Size(750, 50), // Buton genişliği
+                    minimumSize: const Size(750, 50), // Buton genişliği
                   ),
+                  child:
+                      Text('Giriş Yap', style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-                Row(
+                const Row(
                   children: [
                     Expanded(child: Divider()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text('veya'),
                     ),
                     Expanded(child: Divider()),
                   ],
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 ElevatedButton.icon(
                   onPressed: () {
@@ -152,37 +154,37 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context) => EmailRegisterPage()),
                     );
                   },
-                  icon: Icon(Icons.mail_outline),
+                  icon: const Icon(Icons.mail_outline),
                   label: Text('Email ile Kayıt Ol',
                       style: TextStyle(color: Colors.grey.shade700)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey.shade200, // Soft gri renk
-                    minimumSize: Size(750, 50),
+                    minimumSize: const Size(750, 50),
                   ),
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 ElevatedButton.icon(
                   onPressed: () {
                     // Gmail ile devam etme fonksiyonu
                   },
-                  icon: Icon(Icons.mail_outline),
+                  icon: const Icon(Icons.mail_outline),
                   label: Text('Gmail ile Devam Et',
                       style: TextStyle(color: Colors.grey.shade700)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey.shade200, // Soft gri renk
-                    minimumSize: Size(750, 50),
+                    minimumSize: const Size(750, 50),
                   ),
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 TextButton(
                   onPressed: () {
                     // Kaydolmadan Devam Et
                   },
-                  child: Text('Kaydolmadan Devam Et'),
+                  child: const Text('Kaydolmadan Devam Et'),
                 ),
               ],
             ),
@@ -194,5 +196,5 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 void main() {
-  runApp(MaterialApp());
+  runApp(const MaterialApp());
 }

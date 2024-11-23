@@ -4,6 +4,8 @@ import 'package:gelir_gider_app/login_page.dart';
 import 'package:http/http.dart' as http;
 
 class EmailRegisterPage extends StatefulWidget {
+  const EmailRegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -19,14 +21,8 @@ class PhoneInputFormatter extends TextInputFormatter {
     }
 
     // Format to 0 505 574 98 32
-    String formatted = '0 (' +
-        text.substring(1, 4) +
-        ') ' +
-        text.substring(4, 7) +
-        ' ' +
-        text.substring(7, 9) +
-        ' ' +
-        text.substring(9, 11);
+    String formatted =
+        '0 (${text.substring(1, 4)}) ${text.substring(4, 7)} ${text.substring(7, 9)} ${text.substring(9, 11)}';
     return TextEditingValue(
       text: formatted,
       selection: newValue.selection.copyWith(
@@ -41,17 +37,18 @@ class _RegisterPageState extends State<EmailRegisterPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,21 +57,21 @@ class _RegisterPageState extends State<EmailRegisterPage> {
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Görsel eklemesi
-                Container(
+                SizedBox(
                   width: 150, // login sayfasıyla orantılı
                   child: Image.asset(
                     'assets/login_image.png', // kayıt sayfasındaki görsel
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Kullanıcı Adı TextField
                 TextFormField(
                   controller: _usernameController,
-                  decoration: InputDecoration(labelText: 'Kullanıcı Adı'),
+                  decoration: const InputDecoration(labelText: 'Kullanıcı Adı'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Kullanıcı adı zorunludur';
@@ -82,12 +79,12 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 // E-posta TextField
                 TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(labelText: 'Email'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -102,12 +99,13 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 // Telefon Numarası TextField
                 TextFormField(
                   controller: _phoneController,
-                  decoration: InputDecoration(labelText: 'Telefon Numarası'),
+                  decoration:
+                      const InputDecoration(labelText: 'Telefon Numarası'),
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
@@ -124,7 +122,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 // Şifre TextField
                 TextFormField(
@@ -152,7 +150,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 // Şifre Doğrulama TextField
                 TextFormField(
@@ -184,38 +182,38 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Kullanım Koşulları ve Gizlilik Politikası
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Kayıt olarak, '),
+                    const Text('Kayıt olarak, '),
                     InkWell(
                       onTap: () {
                         // Kullanım Koşulları sayfasına yönlendir
                         Navigator.pushNamed(context, '/kullanim_kosullari');
                       },
-                      child: Text(
+                      child: const Text(
                         'Kullanım Koşulları',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
-                    Text(' ve '),
+                    const Text(' ve '),
                     InkWell(
                       onTap: () {
                         // Gizlilik Politikası sayfasına yönlendir
                         Navigator.pushNamed(context, '/gizlilik_sozlesmesi');
                       },
-                      child: Text(
+                      child: const Text(
                         'Gizlilik Politikası',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
-                    Text('\'nı kabul etmiş olursunuz.'),
+                    const Text('\'nı kabul etmiş olursunuz.'),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Kaydet Butonu
                 ElevatedButton(
@@ -241,15 +239,15 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                       }
                     }
                   },
-                  child: Text('Kaydet'),
+                  child: const Text('Kaydet'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 // Zaten Kayıtlı mısınız? Giriş Yap butonu
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Zaten kayıtlı mısınız? '),
+                    const Text('Zaten kayıtlı mısınız? '),
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -257,7 +255,7 @@ class _RegisterPageState extends State<EmailRegisterPage> {
                           MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Giriş Yap',
                         style: TextStyle(color: Colors.blue),
                       ),
